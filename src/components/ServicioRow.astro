@@ -1,0 +1,38 @@
+---
+import { Check, ArrowRight } from '@lucide/astro';
+
+interface Props {
+  reverse?: boolean;
+  title: string;
+  bullets: string[];
+  ctaText: string;
+  ctaHref: string;
+}
+
+const { reverse = false, title, bullets, ctaText, ctaHref } = Astro.props;
+---
+
+<div class:list={['reveal flex flex-col lg:items-center gap-10 lg:gap-16', reverse ? 'lg:flex-row-reverse' : 'lg:flex-row']}>
+  <div class="w-full lg:w-1/2">
+    <h3 class="font-display font-bold mb-4" style="font-size:clamp(1.5rem, 3vw, 2.25rem); color:#F2F5FF;">
+      {title}
+    </h3>
+    <p class="mb-6" style="color:rgba(242,245,255,0.85);">
+      <slot name="description" />
+    </p>
+    <ul class="space-y-3 mb-8">
+      {bullets.map((bullet) => (
+        <li class="flex items-start gap-3 text-sm" style="color:rgba(242,245,255,0.85);">
+          <Check class="w-4 h-4 mt-0.5 shrink-0" style="color:var(--primary-l);" />
+          {bullet}
+        </li>
+      ))}
+    </ul>
+    <a href={ctaHref} class="inline-flex items-center gap-2 text-sm font-medium" style="color:var(--primary-l);">
+      {ctaText} <ArrowRight class="w-4 h-4" />
+    </a>
+  </div>
+  <div class="w-full lg:w-1/2">
+    <slot name="mockup" />
+  </div>
+</div>

@@ -1,0 +1,36 @@
+---
+import { BadgeCheck, ShieldCheck, LifeBuoy, HeartHandshake } from '@lucide/astro';
+
+const cards = [
+  { icon: BadgeCheck, title: 'Profesionalismo', text: 'Procesos claros, tiempos definidos y comunicación directa en cada etapa del proyecto.' },
+  { icon: ShieldCheck, title: 'Compromiso', text: 'Cada proyecto se lleva adelante hasta que funciona correctamente en la operación del negocio, con seguimiento posterior a la entrega.' },
+  { icon: LifeBuoy, title: 'Acompañamiento', text: 'Estamos disponibles para resolver dudas, ajustar lo que haga falta y capacitar a tu equipo, no solo el día de la entrega.' },
+  { icon: HeartHandshake, title: 'Un socio a largo plazo', text: 'El vínculo con cada cliente continúa después de la implementación. A medida que el negocio crece, se suman nuevas soluciones: el objetivo es acompañar ese crecimiento en el tiempo.' },
+];
+---
+
+<section id="por-que" class="relative overflow-hidden py-24 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="reveal text-center max-w-2xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 text-xs tracking-widest uppercase mb-4" style="color:var(--primary-l);">
+        <span class="w-1.5 h-1.5 rounded-full bg-mist"></span>
+        Por qué Zential
+      </div>
+      <h2 class="font-display font-bold mb-4" style="font-size:clamp(2rem, 5vw, 3.5rem); color:#F2F5FF;">
+        Profesionalismo y acompañamiento en cada etapa.
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      {cards.map((card) => (
+        <div class="reveal liquid-glass hover-lift rounded-2xl p-7 text-center">
+          <div class="liquid-glass-strong w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5">
+            <card.icon class="w-6 h-6" style="color:var(--primary-l);" />
+          </div>
+          <h3 class="font-display font-semibold mb-2" style="color:#F2F5FF;">{card.title}</h3>
+          <p class="text-sm" style="color:rgba(242,245,255,0.85);">{card.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

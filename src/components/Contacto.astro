@@ -1,0 +1,97 @@
+---
+import { ChevronDown, Mail } from '@lucide/astro';
+
+const rubros = [
+  'Gastronomía',
+  'Comercio / Retail',
+  'Salud y estética',
+  'Servicios profesionales',
+  'Inmobiliaria',
+  'Educación',
+  'Otro',
+];
+---
+
+<section id="contacto" class="relative overflow-hidden py-24 px-4">
+  <div class="max-w-xl mx-auto text-center mb-12">
+    <div class="reveal inline-flex items-center gap-2 text-xs tracking-widest uppercase mb-4" style="color:var(--primary-l);">
+      <span class="w-1.5 h-1.5 rounded-full bg-mist"></span>
+      Contacto
+    </div>
+    <h2 class="reveal font-display font-bold mb-4" style="font-size:clamp(2rem, 5vw, 3.5rem); color:#F2F5FF;">
+      Contanos sobre tu negocio.
+    </h2>
+    <p class="reveal" style="color:rgba(242,245,255,0.85);">
+      Completá el formulario y te respondemos por mail a la brevedad.
+    </p>
+  </div>
+
+  <div class="reveal liquid-glass rounded-3xl p-6 md:p-10 max-w-xl mx-auto">
+    <form id="contact-form" novalidate>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+        <div>
+          <label for="cf-nombre" class="block text-xs mb-2" style="color:rgba(242,245,255,0.85);">Nombre *</label>
+          <input id="cf-nombre" name="nombre" type="text" required placeholder="Tu nombre"
+                 class="w-full rounded-xl px-4 py-3 text-sm bg-white/5 border border-white/10 focus:outline-none focus:border-mist/50"
+                 style="color:#F2F5FF;" />
+        </div>
+        <div>
+          <label for="cf-empresa" class="block text-xs mb-2" style="color:rgba(242,245,255,0.85);">Empresa *</label>
+          <input id="cf-empresa" name="empresa" type="text" required placeholder="Nombre de tu negocio"
+                 class="w-full rounded-xl px-4 py-3 text-sm bg-white/5 border border-white/10 focus:outline-none focus:border-mist/50"
+                 style="color:#F2F5FF;" />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+        <div>
+          <label for="cf-whatsapp" class="block text-xs mb-2" style="color:rgba(242,245,255,0.85);">WhatsApp *</label>
+          <input id="cf-whatsapp" name="whatsapp" type="tel" required placeholder="+54 9 11 1234 5678"
+                 class="w-full rounded-xl px-4 py-3 text-sm bg-white/5 border border-white/10 focus:outline-none focus:border-mist/50"
+                 style="color:#F2F5FF;" />
+        </div>
+        <div>
+          <label for="cf-rubro" class="block text-xs mb-2" style="color:rgba(242,245,255,0.85);">Rubro del negocio *</label>
+          <div class="relative">
+            <select id="cf-rubro" name="rubro" required
+                    class="w-full appearance-none rounded-xl px-4 py-3 text-sm bg-white/5 border border-white/10 focus:outline-none focus:border-mist/50"
+                    style="color:#F2F5FF;">
+              <option value="" disabled selected style="color:#0D1240;">Seleccioná tu rubro</option>
+              {rubros.map((rubro) => <option style="color:#0D1240;">{rubro}</option>)}
+            </select>
+            <ChevronDown class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" style="color:var(--primary-l);" />
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <label for="cf-email" class="block text-xs mb-2" style="color:rgba(242,245,255,0.85);">Email (opcional)</label>
+        <input id="cf-email" name="email" type="email" placeholder="tu@email.com"
+               class="w-full rounded-xl px-4 py-3 text-sm bg-white/5 border border-white/10 focus:outline-none focus:border-mist/50"
+               style="color:#F2F5FF;" />
+      </div>
+
+      <div class="mb-2">
+        <label for="cf-mensaje" class="block text-xs mb-2" style="color:rgba(242,245,255,0.85);">Mensaje (opcional)</label>
+        <textarea id="cf-mensaje" name="mensaje" rows="3" placeholder="Contanos un poco sobre tu negocio o qué te gustaría automatizar..."
+                  class="w-full rounded-xl px-4 py-3 text-sm bg-white/5 border border-white/10 focus:outline-none focus:border-mist/50 resize-none"
+                  style="color:#F2F5FF;"></textarea>
+      </div>
+
+      <div class="mb-4" style="position:absolute; left:-9999px;" aria-hidden="true">
+        <label for="cf-company-website">No completar este campo</label>
+        <input id="cf-company-website" name="company_website" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <p id="contact-form-status" class="form-status text-sm text-center mb-4" role="status"></p>
+
+      <button id="contact-form-submit" type="submit"
+              class="w-full inline-flex items-center justify-center gap-2 bg-zafiro hover:bg-marino transition-colors text-white font-medium px-7 py-3.5 rounded-full shadow-[0_8px_30px_rgba(23,53,158,0.5)] disabled:opacity-60">
+        Enviar consulta
+        <Mail class="w-4 h-4" />
+      </button>
+    </form>
+  </div>
+</section>
+
+<script src="../scripts/contact-form.ts"></script>

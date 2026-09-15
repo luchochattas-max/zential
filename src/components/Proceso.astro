@@ -1,0 +1,39 @@
+---
+import { Search, FileText, Code2, Users, RefreshCw } from '@lucide/astro';
+
+const steps = [
+  { icon: Search, n: '01', title: 'Diagnóstico', text: 'Relevamos tu negocio en una primera llamada: qué hacés, dónde perdés tiempo y qué margen hay para automatizar.' },
+  { icon: FileText, n: '02', title: 'Propuesta', text: 'Te presentamos la solución específica para tu caso, con alcance y precio definidos antes de arrancar.' },
+  { icon: Code2, n: '03', title: 'Desarrollo', text: 'Construimos el agente, la automatización o el sistema acordado, a medida de tu operación.' },
+  { icon: Users, n: '04', title: 'Onboarding', text: 'Te acompañamos en las primeras semanas y capacitamos a tu equipo para que lo use sin fricción.' },
+  { icon: RefreshCw, n: '05', title: 'Mantenimiento', text: 'Suscripción mensual con soporte, actualizaciones y nuevas funciones a medida que tu negocio crece.' },
+];
+---
+
+<section id="proceso" class="relative overflow-hidden py-24 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="reveal text-center max-w-2xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 text-xs tracking-widest uppercase mb-4" style="color:var(--primary-l);">
+        <span class="w-1.5 h-1.5 rounded-full bg-mist"></span>
+        Cómo trabajamos
+      </div>
+      <h2 class="font-display font-bold mb-4" style="font-size:clamp(2rem, 5vw, 3.5rem); color:#F2F5FF;">
+        Un proceso claro, de punta a punta.
+      </h2>
+      <p style="color:rgba(242,245,255,0.85); font-size:16px;">
+        Un proceso estructurado en cinco etapas, sin atajos: en cada momento sabés con precisión en qué instancia se encuentra tu proyecto.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+      {steps.map((step) => (
+        <div class="reveal liquid-glass hover-lift rounded-2xl p-6">
+          <step.icon class="w-5 h-5 mb-6" style="color:var(--primary-l);" />
+          <div class="font-display font-bold text-3xl mb-3" style="color:var(--primary-l);">{step.n}</div>
+          <h3 class="font-display font-semibold mb-2" style="color:#F2F5FF;">{step.title}</h3>
+          <p class="text-sm" style="color:rgba(242,245,255,0.85);">{step.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,42 @@
+---
+import { Plus } from '@lucide/astro';
+
+const items = [
+  { q: '¿Necesito tener todo digitalizado antes de empezar?', a: 'No. Partimos de tu situación actual, sin importar cuán ordenada o desordenada esté, y priorizamos lo más urgente primero.' },
+  { q: '¿Cuánto cuesta implementar una solución?', a: 'Depende del diagnóstico de tu negocio. La primera reunión es sin cargo, y ahí definimos el alcance y la inversión antes de empezar cualquier desarrollo.' },
+  { q: '¿Qué pasa después de la implementación?', a: 'Pasás a un plan de mantenimiento mensual: soporte, actualizaciones y nuevas funciones a medida que tu negocio lo requiere.' },
+  { q: '¿Cómo es el proceso de trabajo?', a: 'Cinco etapas: diagnóstico, propuesta, desarrollo, onboarding y mantenimiento. Podés ver el detalle de cada una más arriba, en la sección Proceso.' },
+  { q: '¿Sirve para cualquier tipo de negocio?', a: 'Trabajamos con organizaciones de distintos rubros y tamaños. Lo que cambia según cada caso es el punto de partida y el orden en que se suman las soluciones.' },
+  { q: '¿Qué tan rápido se ven resultados?', a: 'Varía según la solución. Un agente de atención suele estar operativo en pocas semanas; un desarrollo a medida depende del alcance definido en la propuesta.' },
+];
+---
+
+<section id="faq" class="relative overflow-hidden py-24 px-4">
+  <div class="max-w-3xl mx-auto">
+    <div class="reveal text-center mb-14">
+      <div class="inline-flex items-center gap-2 text-xs tracking-widest uppercase mb-4" style="color:var(--primary-l);">
+        <span class="w-1.5 h-1.5 rounded-full bg-mist"></span>
+        Preguntas frecuentes
+      </div>
+      <h2 class="font-display font-bold" style="font-size:clamp(2rem, 5vw, 3.5rem); color:#F2F5FF;">
+        Antes de escribirnos.
+      </h2>
+    </div>
+
+    <div class="space-y-4">
+      {items.map((item) => (
+        <div class="faq-item reveal liquid-glass rounded-2xl overflow-hidden">
+          <button class="faq-toggle w-full flex items-center justify-between gap-4 text-left px-6 py-5" aria-expanded="false">
+            <span class="font-display font-medium" style="color:#F2F5FF;">{item.q}</span>
+            <Plus class="faq-toggle-icon w-5 h-5 shrink-0" style="color:var(--primary-l);" />
+          </button>
+          <div class="faq-answer px-6">
+            <p class="pb-5 text-sm" style="color:rgba(242,245,255,0.85);">{item.a}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script src="../scripts/faq.ts"></script>

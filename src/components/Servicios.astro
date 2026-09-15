@@ -1,0 +1,167 @@
+---
+import ServicioRow from './ServicioRow.astro';
+import { MessageCircle, Users, MessageSquare, BarChart2, Settings } from '@lucide/astro';
+import { Image } from 'astro:assets';
+import automatizacion from '../assets/mockups/automatizacion.jpg';
+---
+
+<section id="servicios" class="relative overflow-hidden py-24 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="reveal text-center max-w-2xl mx-auto mb-20">
+      <div class="inline-flex items-center gap-2 text-xs tracking-widest uppercase mb-4" style="color:var(--primary-l);">
+        <span class="w-1.5 h-1.5 rounded-full bg-mist"></span>
+        Servicios
+      </div>
+      <h2 class="font-display font-bold mb-4" style="font-size:clamp(2rem, 5vw, 3.5rem); color:#F2F5FF;">
+        Soluciones que crecen con tu negocio.
+      </h2>
+    </div>
+
+    <div class="mb-24">
+      <ServicioRow
+        title="Un agente que responde por vos, las 24 horas."
+        bullets={[
+          'Responde en segundos, todos los días',
+          'Deriva a un humano cuando hace falta',
+          'Aprende de tu negocio, no de una plantilla',
+        ]}
+        ctaText="Consultar por Zential Atención IA"
+        ctaHref="mailto:zential.ai@gmail.com?subject=Quiero%20info%20de%20Zential%20Atenci%C3%B3n%20IA"
+      >
+        <Fragment slot="description">
+          <strong style="color:var(--primary-l); font-weight:600;">Zential Atención IA</strong> responde consultas, agenda turnos y deriva lo que realmente necesita a una persona, en el canal que uses para atender a tus clientes: WhatsApp, Instagram o el que corresponda a tu negocio. Aprende de tu catálogo y de tu forma de atender, no de un guion genérico.
+        </Fragment>
+        <div slot="mockup" class="liquid-glass-strong rounded-3xl p-6 md:p-8 max-w-md mx-auto">
+          <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+            <div class="w-9 h-9 rounded-full bg-zafiro flex items-center justify-center">
+              <MessageCircle class="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <div class="text-sm font-medium" style="color:#F2F5FF;">Zential Atención IA</div>
+              <div class="text-xs flex items-center gap-1.5" style="color:rgba(242,245,255,0.6);"><span class="w-1.5 h-1.5 rounded-full bg-mist pulse-dot"></span>En línea</div>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <div class="bg-white/5 rounded-2xl rounded-tl-sm px-4 py-2.5 text-sm max-w-[85%]" style="color:rgba(242,245,255,0.9);">Hola, ¿tienen turno para el jueves?</div>
+            <div class="bg-zafiro/70 rounded-2xl rounded-tr-sm px-4 py-2.5 text-sm max-w-[85%] ml-auto" style="color:#F2F5FF;">Sí, tenemos disponible a las 10:30 y a las 16:00. ¿Cuál te queda mejor?</div>
+            <div class="bg-white/5 rounded-2xl rounded-tl-sm px-4 py-2.5 text-sm max-w-[85%]" style="color:rgba(242,245,255,0.9);">A las 16 está perfecto</div>
+            <div class="bg-zafiro/70 rounded-2xl rounded-tr-sm px-4 py-2.5 text-sm max-w-[85%] ml-auto" style="color:#F2F5FF;">Quedaste agendado para el jueves a las 16:00. Te confirmamos por acá un rato antes.</div>
+          </div>
+        </div>
+      </ServicioRow>
+    </div>
+
+    <div class="mb-24">
+      <ServicioRow
+        reverse
+        title="Toda la información de tus clientes, en un solo lugar."
+        bullets={[
+          'Historial completo de cada cliente, sin planillas sueltas',
+          'Estados y seguimiento hechos a tu medida',
+          'Se integra con tu agente de atención y tus herramientas actuales',
+        ]}
+        ctaText="Consultar por un CRM a medida"
+        ctaHref="mailto:zential.ai@gmail.com?subject=Quiero%20info%20de%20un%20CRM%20a%20medida"
+      >
+        <Fragment slot="description">
+          Reunimos el historial, los pedidos y el seguimiento comercial de cada cliente en un mismo sistema, ajustado a cómo opera tu negocio y no al revés.
+        </Fragment>
+        <div slot="mockup" class="liquid-glass-strong rounded-2xl overflow-hidden max-w-md mx-auto flex">
+          <div class="hidden sm:flex flex-col items-center gap-5 w-14 py-5 border-r border-white/10 bg-white/5 shrink-0">
+            <Users class="w-4 h-4" style="color:var(--primary-l);" />
+            <MessageSquare class="w-4 h-4" style="color:rgba(242,245,255,0.4);" />
+            <BarChart2 class="w-4 h-4" style="color:rgba(242,245,255,0.4);" />
+            <Settings class="w-4 h-4" style="color:rgba(242,245,255,0.4);" />
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between px-5 py-4 border-b border-white/10">
+              <span class="text-sm font-medium" style="color:#F2F5FF;">Contactos</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2.5 p-3 pb-1.5">
+              <div class="rounded-xl bg-white/5 px-3 py-2.5">
+                <div class="text-xs mb-0.5" style="color:rgba(242,245,255,0.6);">Clientes activos</div>
+                <div class="font-display font-bold text-lg" style="color:#F2F5FF;">42</div>
+              </div>
+              <div class="rounded-xl bg-white/5 px-3 py-2.5">
+                <div class="text-xs mb-0.5" style="color:rgba(242,245,255,0.6);">Nuevos esta semana</div>
+                <div class="font-display font-bold text-lg" style="color:var(--primary-l);">6</div>
+              </div>
+            </div>
+            <div class="p-3 pt-1.5 space-y-1.5">
+              <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white/5">
+                <div class="w-8 h-8 rounded-full bg-zafiro flex items-center justify-center text-xs font-medium shrink-0" style="color:#F2F5FF;">MC</div>
+                <span class="text-sm flex-1 truncate" style="color:rgba(242,245,255,0.9);">María Cabrera</span>
+                <span class="text-xs px-2.5 py-1 rounded-full shrink-0" style="background:rgba(174,192,250,0.15); color:var(--primary-l);">Nuevo</span>
+              </div>
+              <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white/5">
+                <div class="w-8 h-8 rounded-full bg-mist/30 flex items-center justify-center text-xs font-medium shrink-0" style="color:#F2F5FF;">RD</div>
+                <span class="text-sm flex-1 truncate" style="color:rgba(242,245,255,0.9);">Roberto Díaz</span>
+                <span class="text-xs px-2.5 py-1 rounded-full bg-white/10 shrink-0" style="color:rgba(242,245,255,0.75);">En seguimiento</span>
+              </div>
+              <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white/5">
+                <div class="w-8 h-8 rounded-full bg-zafiro/60 flex items-center justify-center text-xs font-medium shrink-0" style="color:#F2F5FF;">LP</div>
+                <span class="text-sm flex-1 truncate" style="color:rgba(242,245,255,0.9);">Lucía Paz</span>
+                <span class="text-xs px-2.5 py-1 rounded-full shrink-0" style="background:rgba(174,192,250,0.25); color:var(--primary-l);">Cliente</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ServicioRow>
+    </div>
+
+    <div class="mb-24">
+      <ServicioRow
+        title="Una web que muestra tu negocio como corresponde."
+        bullets={[
+          'Diseño propio, no una plantilla genérica',
+          'Contenido y estructura pensados para tu negocio',
+          'Integrable con tu agente de atención y tu catálogo',
+        ]}
+        ctaText="Consultar por una web a medida"
+        ctaHref="mailto:zential.ai@gmail.com?subject=Quiero%20info%20de%20una%20web%20a%20medida"
+      >
+        <Fragment slot="description">
+          Webs institucionales o de venta, con la estructura y el contenido que tu negocio necesita mostrar, sin plantillas genéricas armadas para cualquier rubro.
+        </Fragment>
+        <div slot="mockup" class="liquid-glass-strong rounded-2xl overflow-hidden max-w-md mx-auto">
+          <div class="flex items-center gap-1.5 px-4 py-3 border-b border-white/10 bg-white/5">
+            <span class="w-2.5 h-2.5 rounded-full bg-white/20"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-white/20"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-white/20"></span>
+            <span class="ml-3 text-xs px-3 py-1 rounded-full bg-white/5" style="color:rgba(242,245,255,0.6);">tunegocio.com.ar</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-6 text-xs" style="color:rgba(242,245,255,0.6);">
+              <span class="font-display font-semibold" style="color:#F2F5FF;">Tu Negocio</span>
+              <div class="hidden sm:flex items-center gap-4">
+                <span>Inicio</span><span>Servicios</span><span>Contacto</span>
+              </div>
+            </div>
+            <h4 class="font-display font-semibold mb-2" style="font-size:1.15rem; color:#F2F5FF;">Bienvenido a tu negocio</h4>
+            <p class="text-sm mb-5" style="color:rgba(242,245,255,0.7);">Contale a tus clientes quién sos y qué ofrecés, desde una web hecha a tu medida.</p>
+            <div class="inline-flex h-9 items-center px-5 rounded-full bg-zafiro text-xs font-medium" style="color:#F2F5FF;">Conocer más</div>
+          </div>
+        </div>
+      </ServicioRow>
+    </div>
+
+    <ServicioRow
+      reverse
+      title="Tus procesos, funcionando de manera automática."
+      bullets={[
+        'Menos carga manual, menos errores',
+        'Tus herramientas actuales, mejor conectadas',
+        'Se adapta a los procesos que ya tenés, no al revés',
+      ]}
+      ctaText="Consultar por una automatización"
+      ctaHref="mailto:zential.ai@gmail.com?subject=Quiero%20info%20de%20una%20automatizaci%C3%B3n"
+    >
+      <Fragment slot="description">
+        Conectamos las herramientas que ya usás para eliminar tareas manuales, dobles cargas y planillas sueltas: los procesos se ejecutan solos cuando algo cambia.
+      </Fragment>
+      <div slot="mockup" class="rounded-2xl overflow-hidden mx-auto" style="max-width:512px; aspect-ratio:1408/685;">
+        <Image src={automatizacion} alt="Automatización conectando herramientas y procesos" class="w-full h-full object-cover" style="filter:hue-rotate(40deg) saturate(0.8) brightness(0.95) contrast(1.05);" widths={[384, 512, 768]} sizes="(min-width: 1024px) 512px, 90vw" />
+      </div>
+    </ServicioRow>
+  </div>
+</section>
