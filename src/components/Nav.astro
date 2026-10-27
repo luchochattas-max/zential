@@ -5,7 +5,10 @@ import { Image } from 'astro:assets';
 import WhatsAppIcon from './WhatsAppIcon.astro';
 import { whatsappUrl, MENSAJE_DIAGNOSTICO } from '../config/whatsapp';
 
-const navItems = [
+type SubItem = { icon: typeof MessageCircle; label: string; href: string; desc?: string };
+type NavItem = { label: string; href: string; width?: string; items?: SubItem[] };
+
+const navItems: NavItem[] = [
   {
     label: 'Servicios',
     href: '#servicios',

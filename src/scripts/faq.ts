@@ -14,3 +14,5 @@ items.forEach((item) => {
     }
   });
 });
+// Esto es un módulo para TS (igual que analytics.ts): evita que sus variables choquen con las de otros scripts.
+export {};
