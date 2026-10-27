@@ -89,12 +89,21 @@ body, a, button, input, textarea, select, label, [role="button"] { cursor: none 
     linear-gradient(180deg, rgba(5,6,28,0.88) 0%, rgba(5,6,28,0.94) 100%);
 }
 .global-blobs { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
-.blob { position: absolute; border-radius: 9999px; filter: blur(90px); mix-blend-mode: screen; pointer-events: none; will-change: transform; }
-.blob-a { width: 680px; height: 680px; top: -15%; left: -12%; background: radial-gradient(circle, rgba(23,53,158,0.55) 0%, transparent 70%); animation: blobDrift1 14s ease-in-out infinite; }
-.blob-b { width: 580px; height: 580px; bottom: -18%; right: -12%; background: radial-gradient(circle, rgba(174,192,250,0.35) 0%, transparent 70%); animation: blobDrift2 16s ease-in-out infinite; }
-.blob-c { width: 500px; height: 500px; top: 25%; right: 20%; background: radial-gradient(circle, rgba(23,53,158,0.4) 0%, transparent 70%); animation: blobDrift3 18s ease-in-out infinite; }
-.blob-d { width: 460px; height: 460px; top: 45%; left: 15%; background: radial-gradient(circle, rgba(174,192,250,0.3) 0%, transparent 70%); animation: blobDrift4 20s ease-in-out infinite; }
-.blob-e { width: 380px; height: 380px; top: 10%; left: 45%; background: radial-gradient(circle, rgba(23,53,158,0.32) 0%, transparent 70%); animation: blobDrift1 22s ease-in-out infinite reverse; }
+/* El desvanecido queda incorporado en los stops del gradiente en vez de un filter:blur() en tiempo real:
+   mismo resplandor difuso, sin el costo de GPU de blurear 5 capas grandes en loop infinito. */
+.blob { position: absolute; border-radius: 9999px; mix-blend-mode: screen; pointer-events: none; will-change: transform; }
+.blob-a { width: 680px; height: 680px; top: -15%; left: -12%; background: radial-gradient(circle, rgba(23,53,158,0.42) 0%, rgba(23,53,158,0.16) 35%, transparent 68%); animation: blobDrift1 14s ease-in-out infinite; }
+.blob-b { width: 580px; height: 580px; bottom: -18%; right: -12%; background: radial-gradient(circle, rgba(174,192,250,0.28) 0%, rgba(174,192,250,0.10) 35%, transparent 68%); animation: blobDrift2 16s ease-in-out infinite; }
+.blob-c { width: 500px; height: 500px; top: 25%; right: 20%; background: radial-gradient(circle, rgba(23,53,158,0.32) 0%, rgba(23,53,158,0.12) 35%, transparent 68%); animation: blobDrift3 18s ease-in-out infinite; }
+.blob-d { width: 460px; height: 460px; top: 45%; left: 15%; background: radial-gradient(circle, rgba(174,192,250,0.24) 0%, rgba(174,192,250,0.08) 35%, transparent 68%); animation: blobDrift4 20s ease-in-out infinite; }
+.blob-e { width: 380px; height: 380px; top: 10%; left: 45%; background: radial-gradient(circle, rgba(23,53,158,0.26) 0%, rgba(23,53,158,0.10) 35%, transparent 68%); animation: blobDrift1 22s ease-in-out infinite reverse; }
+
+/* Celular: 2 manchas en vez de 5 y sin mix-blend-mode (mezclar capas grandes con todo lo que tienen
+   encima es lo más costoso de dibujar en un teléfono). En computadora el fondo queda igual. */
+@media (max-width: 767px) {
+  .blob { mix-blend-mode: normal; }
+  .blob-c, .blob-d, .blob-e { display: none; }
+}
 
 @keyframes blobDrift1 { 0%,100%{transform:translate(0,0) scale(1) rotate(0)} 20%{transform:translate(18%,-12%) scale(1.15) rotate(15deg)} 40%{transform:translate(-14%,10%) scale(.92) rotate(-10deg)} 60%{transform:translate(22%,14%) scale(1.2) rotate(25deg)} 80%{transform:translate(-10%,-18%) scale(.88) rotate(-20deg)} }
 @keyframes blobDrift2 { 0%,100%{transform:translate(0,0) scale(1)} 25%{transform:translate(-20%,14%) scale(1.25)} 50%{transform:translate(16%,-16%) scale(.85)} 75%{transform:translate(-12%,-10%) scale(1.1)} }
@@ -107,11 +116,25 @@ body, a, button, input, textarea, select, label, [role="button"] { cursor: none 
   }
 }
 
+/* Pestaña en segundo plano: pausa las animaciones CSS puras (los loops de requestAnimationFrame
+   de partículas y cursor ya se autolimitan en pestañas ocultas en los navegadores modernos). */
+html.tab-hidden .blob,
+html.tab-hidden .glow-pulse,
+html.tab-hidden .hero-symbol-float,
+html.tab-hidden .pulse-dot,
+html.tab-hidden .marquee-track,
+html.tab-hidden .scroll-line-highlight,
+html.tab-hidden .shiny-text {
+  animation-play-state: paused !important;
+}
+
 /* ============ LIQUID GLASS ============ */
+/* Radio de blur reducido (el costo de backdrop-filter escala ~al cuadrado del radio):
+   se mantiene el efecto de vidrio esmerilado reconocible con mucho menos costo de GPU. */
 .liquid-glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(20px) saturate(145%);
-  -webkit-backdrop-filter: blur(20px) saturate(145%);
+  backdrop-filter: blur(12px) saturate(145%);
+  -webkit-backdrop-filter: blur(12px) saturate(145%);
   box-shadow: 0 10px 30px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.08);
   position: relative; overflow: hidden;
 }
@@ -127,8 +150,8 @@ body, a, button, input, textarea, select, label, [role="button"] { cursor: none 
 }
 .liquid-glass-strong {
   background: var(--glass-bg-strong);
-  backdrop-filter: blur(32px) saturate(150%);
-  -webkit-backdrop-filter: blur(32px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
   box-shadow: 0 16px 44px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1);
   position: relative; overflow: hidden;
 }
@@ -143,15 +166,53 @@ body, a, button, input, textarea, select, label, [role="button"] { cursor: none 
   pointer-events: none;
 }
 
+/* Misma estetica que .liquid-glass (fondo + borde degradado) pero sin backdrop-filter:
+   para tarjetas repetidas donde el desenfoque no se percibe pero sí su costo de GPU
+   cuando hay muchas juntas en pantalla (grillas de Proceso, Por que Zential, FAQ). */
+.glass-lite {
+  background: var(--glass-bg);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.08);
+  position: relative; overflow: hidden;
+}
+.glass-lite::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.4px;
+  background: linear-gradient(180deg,
+    rgba(242,245,255,0.4) 0%, rgba(242,245,255,0.12) 20%,
+    rgba(242,245,255,0.04) 40%, rgba(242,245,255,0.04) 60%,
+    rgba(242,245,255,0.12) 80%, rgba(242,245,255,0.4) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none;
+}
+.glass-lite-strong {
+  background: var(--glass-bg-strong);
+  box-shadow: 0 16px 44px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1);
+  position: relative; overflow: hidden;
+}
+.glass-lite-strong::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.4px;
+  background: linear-gradient(180deg,
+    rgba(242,245,255,0.45) 0%, rgba(242,245,255,0.15) 20%,
+    rgba(242,245,255,0.04) 40%, rgba(242,245,255,0.04) 60%,
+    rgba(242,245,255,0.15) 80%, rgba(242,245,255,0.45) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none;
+}
+
 /* ============ ANIMATIONS ============ */
 @keyframes pulseDot { 0%,100%{opacity:1; transform:scale(1);} 50%{opacity:.4; transform:scale(0.8);} }
 .pulse-dot { animation: pulseDot 2s ease-in-out infinite; }
 
-@keyframes glowPulse {
-  0%,100% { filter: drop-shadow(0 0 18px rgba(174,192,250,0.35)) drop-shadow(0 0 40px rgba(23,53,158,0.25)); opacity: 1; }
-  50% { filter: drop-shadow(0 0 34px rgba(174,192,250,0.6)) drop-shadow(0 0 70px rgba(23,53,158,0.45)); opacity: .92; }
+/* El resplandor (filter) queda fijo y solo se anima la opacidad: animar filter obliga a redibujar
+   el elemento en cada cuadro, mientras que la opacidad la resuelve la GPU sin redibujar. */
+@keyframes glowPulse { 0%,100% { opacity: 1; } 50% { opacity: .78; } }
+.glow-pulse {
+  filter: drop-shadow(0 0 26px rgba(174,192,250,0.48)) drop-shadow(0 0 55px rgba(23,53,158,0.35));
+  animation: glowPulse 4.5s ease-in-out infinite;
 }
-.glow-pulse { animation: glowPulse 4.5s ease-in-out infinite; }
+/* Puntos de la cinta de herramientas: brillo fijo (son 30 elementos en movimiento constante) */
+.marquee-dot { box-shadow: 0 0 10px rgba(174,192,250,0.7), 0 0 22px rgba(23,53,158,0.5); }
 
 @keyframes heroSymbolFloat { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-8px); } }
 .hero-symbol-float { animation: heroSymbolFloat 6s ease-in-out infinite; }
@@ -162,16 +223,30 @@ body, a, button, input, textarea, select, label, [role="button"] { cursor: none 
 @keyframes scrollLine { 0%{ transform: translateY(-100%); opacity:0; } 30%{opacity:1;} 100%{ transform: translateY(220%); opacity:0; } }
 .scroll-line-highlight { animation: scrollLine 1.8s ease-in-out infinite; }
 
-.reveal { opacity: 0; transform: translateY(28px); filter: blur(8px); transition: opacity .8s ease, transform .8s ease, filter .8s ease; }
-.reveal.in-view { opacity: 1; transform: translateY(0); filter: blur(0); }
+/* Sin filter:blur() en la transicion (es una operacion de GPU cara repetida en ~28 elementos
+   al scrollear); opacity+transform da la misma sensacion de aparicion suave sin ese costo. */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.in-view { opacity: 1; transform: translateY(0); }
 
 .hover-lift { transition: transform .35s cubic-bezier(0.16,1,0.3,1), box-shadow .35s ease; }
 .hover-lift:hover { transform: translateY(-6px); }
 
 /* ============ NAV ============ */
 #navbar { transition: padding .3s ease; }
-#navbar .nav-pill { transition: background .3s ease, backdrop-filter .3s ease, box-shadow .3s ease; }
+/* overflow:visible pisa el overflow:hidden de .liquid-glass: el mega-menu de Servicios/Proceso
+   necesita poder dibujarse por fuera del borde redondeado de la pildora del nav. */
+#navbar .nav-pill { transition: background .3s ease, backdrop-filter .3s ease, box-shadow .3s ease; overflow: visible; }
 #navbar.scrolled .nav-pill { box-shadow: 0 8px 30px rgba(0,0,0,0.45); }
+
+/* Mega-menu de escritorio (Servicios / Proceso): el padding-top de .nav-dropdown
+   hace de puente sin gap real, para que mover el mouse del link al panel no lo cierre. */
+.nav-dropdown { transition: opacity .2s ease, transform .2s ease; }
+
+/* Acordeón del submenu en el menu mobile (mismo mecanismo que .faq-answer). */
+.nav-sub { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+.nav-accordion.open .nav-sub { max-height: 400px; }
+.nav-accordion-icon { transition: transform .3s ease; }
+.nav-accordion.open .nav-accordion-icon { transform: rotate(180deg); }
 
 /* ============ FAQ ============ */
 .faq-answer { max-height: 0; overflow: hidden; transition: max-height .4s ease; }

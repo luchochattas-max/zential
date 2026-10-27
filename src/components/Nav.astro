@@ -1,36 +1,84 @@
 ---
-import { Menu, X } from '@lucide/astro';
+import { Menu, X, ChevronDown, MessageCircle, Users, Globe, Zap, Search, FileText, Code2, RefreshCw, Phone, Brain } from '@lucide/astro';
 import wordmark from '../assets/logo/zential_wordmark_mono_blanco.png';
 import { Image } from 'astro:assets';
+import WhatsAppIcon from './WhatsAppIcon.astro';
+import { whatsappUrl, MENSAJE_DIAGNOSTICO } from '../config/whatsapp';
 
-const links = [
-  { href: '#servicios', label: 'Servicios' },
-  { href: '#proceso', label: 'Proceso' },
-  { href: '#por-que', label: 'Por qué Zential' },
-  { href: '#faq', label: 'FAQ' },
+const navItems = [
+  {
+    label: 'Servicios',
+    href: '#servicios',
+    width: 'w-80',
+    items: [
+      { icon: MessageCircle, label: 'Zential Atención IA', href: '#servicio-atencion-ia', desc: 'Agente 24hs por WhatsApp o Instagram' },
+      { icon: Phone, label: 'Zential Voz', href: '#servicio-voz', desc: 'Asistente que atiende tus llamadas' },
+      { icon: Users, label: 'Zential CRM', href: '#servicio-crm', desc: 'Clientes ordenados y consultas calificadas' },
+      { icon: Brain, label: 'Zential Cerebro', href: '#servicio-cerebro', desc: 'Todo lo que sabe tu empresa, en un lugar' },
+      { icon: Zap, label: 'Zential Automatizaciones', href: '#servicio-automatizacion', desc: 'Las tareas repetitivas, resueltas solas' },
+      { icon: Globe, label: 'Zential Web', href: '#servicio-web', desc: 'Una web que trabaja para tu negocio' },
+    ],
+  },
+  {
+    label: 'Proceso',
+    href: '#proceso',
+    width: 'w-64',
+    items: [
+      { icon: Search, label: '01 · Diagnóstico', href: '#proceso-diagnostico' },
+      { icon: FileText, label: '02 · Propuesta', href: '#proceso-propuesta' },
+      { icon: Code2, label: '03 · Desarrollo', href: '#proceso-desarrollo' },
+      { icon: Users, label: '04 · Onboarding', href: '#proceso-onboarding' },
+      { icon: RefreshCw, label: '05 · Mantenimiento', href: '#proceso-mantenimiento' },
+    ],
+  },
+  { label: 'Por qué Zential', href: '#por-que' },
+  { label: 'FAQ', href: '#faq' },
 ];
 
-const diagnosticoHref = 'mailto:zential.ai@gmail.com?subject=Quiero%20agendar%20un%20diagn%C3%B3stico%20con%20Zential';
+const diagnosticoHref = whatsappUrl(MENSAJE_DIAGNOSTICO);
 ---
 
 <nav id="navbar" class="fixed top-0 inset-x-0 z-50 px-4 pt-4 md:pt-6">
   <div class="max-w-5xl mx-auto">
     <div class="nav-pill liquid-glass rounded-full pl-5 pr-2 py-2 flex items-center justify-between gap-4">
       <a href="#top" class="flex items-center shrink-0" aria-label="Zential — inicio">
-        <Image src={wordmark} alt="Zential" class="h-5 md:h-6 w-auto" />
+        <Image src={wordmark} alt="Zential" width={160} loading="eager" class="h-5 md:h-6 w-auto" />
       </a>
 
       <div class="hidden md:flex items-center gap-6 text-sm" style="color:#F2F5FF;">
-        {links.map((link, i) => (
+        {navItems.map((item, i) => (
           <>
             {i > 0 && <span class="w-px h-4 bg-white/15"></span>}
-            <a href={link.href} class="opacity-85 hover:opacity-100 transition-opacity">{link.label}</a>
+            {item.items ? (
+              <div class="group relative">
+                <a href={item.href} class="flex items-center gap-1 py-2 opacity-85 hover:opacity-100 transition-opacity">
+                  {item.label}
+                  <ChevronDown class="w-3.5 h-3.5 opacity-60 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180" />
+                </a>
+                <div class={`nav-dropdown absolute left-1/2 -translate-x-1/2 top-full pt-3 ${item.width} opacity-0 invisible -translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0`}>
+                  <div class="liquid-glass rounded-2xl p-3 shadow-xl">
+                    {item.items.map((sub) => (
+                      <a href={sub.href} class="flex items-start gap-3 rounded-xl p-2.5 hover:bg-white/5 transition-colors">
+                        <sub.icon class="w-4 h-4 mt-0.5 shrink-0" style="color:var(--primary-l);" />
+                        <span class="text-left">
+                          <span class="block text-sm font-medium" style="color:#F2F5FF;">{sub.label}</span>
+                          {sub.desc && <span class="block text-xs mt-0.5" style="color:rgba(242,245,255,0.6);">{sub.desc}</span>}
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <a href={item.href} class="opacity-85 hover:opacity-100 transition-opacity">{item.label}</a>
+            )}
           </>
         ))}
       </div>
 
-      <a href={diagnosticoHref}
+      <a href={diagnosticoHref} target="_blank" rel="noopener"
          class="hidden md:inline-flex items-center gap-2 bg-zafiro hover:bg-marino transition-colors text-white text-sm font-medium px-5 py-2.5 rounded-full">
+        <WhatsAppIcon class="w-4 h-4" />
         Agendar diagnóstico
       </a>
 
@@ -42,11 +90,33 @@ const diagnosticoHref = 'mailto:zential.ai@gmail.com?subject=Quiero%20agendar%20
 
     <div id="mobile-menu" class="mobile-menu liquid-glass rounded-3xl mt-2 md:hidden">
       <div class="flex flex-col gap-1 p-4 text-sm">
-        {links.map((link) => (
-          <a href={link.href} class="py-2.5 px-2">{link.label}</a>
+        {navItems.map((item) => (
+          item.items ? (
+            <div class="nav-accordion">
+              <div class="flex items-center justify-between">
+                <a href={item.href} class="flex-1 py-2.5 px-2">{item.label}</a>
+                <button type="button" class="nav-accordion-toggle p-2" aria-expanded="false" aria-label={`Ver ${item.label}`}>
+                  <ChevronDown class="nav-accordion-icon w-4 h-4" />
+                </button>
+              </div>
+              <div class="nav-sub px-2">
+                <div class="flex flex-col gap-1 pb-2 pt-1">
+                  {item.items.map((sub) => (
+                    <a href={sub.href} class="flex items-center gap-2.5 py-2 px-2 rounded-lg" style="color:rgba(242,245,255,0.85);">
+                      <sub.icon class="w-3.5 h-3.5 shrink-0" style="color:var(--primary-l);" />
+                      {sub.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <a href={item.href} class="py-2.5 px-2">{item.label}</a>
+          )
         ))}
-        <a href={diagnosticoHref}
-           class="mt-2 text-center bg-zafiro text-white font-medium px-5 py-3 rounded-full">
+        <a href={diagnosticoHref} target="_blank" rel="noopener"
+           class="mt-2 inline-flex items-center justify-center gap-2 bg-zafiro text-white font-medium px-5 py-3 rounded-full">
+          <WhatsAppIcon class="w-4 h-4" />
           Agendar diagnóstico
         </a>
       </div>

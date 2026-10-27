@@ -1,8 +1,18 @@
 ---
 import ServicioRow from './ServicioRow.astro';
-import { MessageCircle, Users, MessageSquare, BarChart2, Settings } from '@lucide/astro';
-import { Image } from 'astro:assets';
-import automatizacion from '../assets/mockups/automatizacion.jpg';
+import { MessageCircle, Users, MessageSquare, BarChart2, Settings, PhoneIncoming, Brain, FileText, Zap, FileSpreadsheet, UserCheck, Mail, Bell, Check, CircleCheck } from '@lucide/astro';
+import { whatsappUrl, mensajeServicio } from '../config/whatsapp';
+
+const webHref = whatsappUrl(mensajeServicio('Zential Web'));
+
+const flujo = [
+  { icon: MessageCircle, text: 'Nuevo pedido recibido por WhatsApp' },
+  { icon: FileSpreadsheet, text: 'Pedido cargado en la planilla' },
+  { icon: UserCheck, text: 'Cliente actualizado en el CRM' },
+  { icon: Mail, text: 'Confirmación enviada por correo' },
+  { icon: Bell, text: 'Equipo notificado para preparar el envío' },
+];
+
 ---
 
 <section id="servicios" class="relative overflow-hidden py-24 px-4">
@@ -17,19 +27,20 @@ import automatizacion from '../assets/mockups/automatizacion.jpg';
       </h2>
     </div>
 
+    <!-- 01 · Atención IA -->
     <div class="mb-24">
       <ServicioRow
-        title="Un agente que responde por vos, las 24 horas."
+        id="servicio-atencion-ia"
+        name="Zential Atención IA"
+        title="Atención automatizada, las 24 horas."
         bullets={[
-          'Responde en segundos, todos los días',
-          'Deriva a un humano cuando hace falta',
-          'Aprende de tu negocio, no de una plantilla',
+          'Respuesta inmediata, todos los días del año',
+          'Derivación a una persona cuando el caso lo requiere',
+          'Entrenado con la información propia del negocio',
         ]}
-        ctaText="Consultar por Zential Atención IA"
-        ctaHref="mailto:zential.ai@gmail.com?subject=Quiero%20info%20de%20Zential%20Atenci%C3%B3n%20IA"
       >
         <Fragment slot="description">
-          <strong style="color:var(--primary-l); font-weight:600;">Zential Atención IA</strong> responde consultas, agenda turnos y deriva lo que realmente necesita a una persona, en el canal que uses para atender a tus clientes: WhatsApp, Instagram o el que corresponda a tu negocio. Aprende de tu catálogo y de tu forma de atender, no de un guion genérico.
+          Un agente de inteligencia artificial que responde consultas, gestiona turnos y deriva a una persona los casos que lo requieren, en los canales de atención de la empresa: WhatsApp, Instagram u otros. Se entrena con la información, el catálogo y los criterios de atención del negocio, no con respuestas genéricas.
         </Fragment>
         <div slot="mockup" class="liquid-glass-strong rounded-3xl p-6 md:p-8 max-w-md mx-auto">
           <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
@@ -41,30 +52,91 @@ import automatizacion from '../assets/mockups/automatizacion.jpg';
               <div class="text-xs flex items-center gap-1.5" style="color:rgba(242,245,255,0.6);"><span class="w-1.5 h-1.5 rounded-full bg-mist pulse-dot"></span>En línea</div>
             </div>
           </div>
-          <div class="space-y-3">
-            <div class="bg-white/5 rounded-2xl rounded-tl-sm px-4 py-2.5 text-sm max-w-[85%]" style="color:rgba(242,245,255,0.9);">Hola, ¿tienen turno para el jueves?</div>
-            <div class="bg-zafiro/70 rounded-2xl rounded-tr-sm px-4 py-2.5 text-sm max-w-[85%] ml-auto" style="color:#F2F5FF;">Sí, tenemos disponible a las 10:30 y a las 16:00. ¿Cuál te queda mejor?</div>
-            <div class="bg-white/5 rounded-2xl rounded-tl-sm px-4 py-2.5 text-sm max-w-[85%]" style="color:rgba(242,245,255,0.9);">A las 16 está perfecto</div>
-            <div class="bg-zafiro/70 rounded-2xl rounded-tr-sm px-4 py-2.5 text-sm max-w-[85%] ml-auto" style="color:#F2F5FF;">Quedaste agendado para el jueves a las 16:00. Te confirmamos por acá un rato antes.</div>
+          <!-- Chat en vivo (scripts/live-mockups.ts): los mensajes aparecen de a uno, con "escribiendo…" antes de cada respuesta -->
+          <div class="space-y-3" data-live-chat>
+            {[
+              { agent: false, text: 'Hola, ¿tienen turno para el jueves?' },
+              { agent: true, text: 'Sí, tenemos disponible a las 10:30 y a las 16:00. ¿Cuál te queda mejor?' },
+              { agent: false, text: 'A las 16 está perfecto' },
+              { agent: true, text: 'Quedaste agendado para el jueves a las 16:00. Te confirmamos por acá un rato antes.' },
+            ].map((m) => (
+              <div class="relative" data-step data-typing={m.agent ? '' : undefined}>
+                {m.agent && (
+                  <div class="lm-typing absolute right-0 top-0 bg-zafiro/70 rounded-2xl rounded-tr-sm px-4 py-3.5 flex items-center gap-1" aria-hidden="true">
+                    <span class="lm-dot"></span><span class="lm-dot"></span><span class="lm-dot"></span>
+                  </div>
+                )}
+                <div class:list={['lm-item rounded-2xl px-4 py-2.5 text-sm max-w-[85%]', m.agent ? 'bg-zafiro/70 rounded-tr-sm ml-auto' : 'bg-white/5 rounded-tl-sm']}
+                     style={m.agent ? 'color:#F2F5FF;' : 'color:rgba(242,245,255,0.9);'}>{m.text}</div>
+              </div>
+            ))}
           </div>
         </div>
       </ServicioRow>
     </div>
 
+    <!-- 02 · Voz -->
     <div class="mb-24">
       <ServicioRow
+        id="servicio-voz"
         reverse
-        title="Toda la información de tus clientes, en un solo lugar."
+        name="Zential Voz"
+        title="Atención telefónica sin llamadas perdidas."
         bullets={[
-          'Historial completo de cada cliente, sin planillas sueltas',
-          'Estados y seguimiento hechos a tu medida',
-          'Se integra con tu agente de atención y tus herramientas actuales',
+          'Atención inmediata, también fuera del horario comercial',
+          'Respuestas basadas en la información real del negocio',
+          'Derivación al equipo con un resumen de cada llamada',
         ]}
-        ctaText="Consultar por un CRM a medida"
-        ctaHref="mailto:zential.ai@gmail.com?subject=Quiero%20info%20de%20un%20CRM%20a%20medida"
       >
         <Fragment slot="description">
-          Reunimos el historial, los pedidos y el seguimiento comercial de cada cliente en un mismo sistema, ajustado a cómo opera tu negocio y no al revés.
+          Un asistente de voz con inteligencia artificial que atiende las llamadas entrantes del negocio. Responde consultas frecuentes, registra datos y turnos, y transfiere la llamada a una persona cuando es necesario, en cualquier horario y con capacidad para atender varias llamadas en simultáneo.
+        </Fragment>
+        <div slot="mockup" class="liquid-glass-strong rounded-3xl p-6 md:p-8 max-w-md mx-auto">
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-zafiro flex items-center justify-center">
+                <PhoneIncoming class="w-4 h-4 text-white" />
+              </div>
+              <div>
+                <div class="text-sm font-medium" style="color:#F2F5FF;">Llamada entrante</div>
+                <div class="text-xs" style="color:rgba(242,245,255,0.6);">+54 9 11 •••• 4821</div>
+              </div>
+            </div>
+            <div class="text-xs flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5" style="color:var(--primary-l);">
+              <span class="w-1.5 h-1.5 rounded-full bg-mist pulse-dot"></span>01:24
+            </div>
+          </div>
+          <div class="voice-wave flex items-center justify-center gap-1 h-14 mb-6" aria-hidden="true">
+            {[0.35, 0.6, 0.9, 0.5, 1, 0.7, 0.4, 0.8, 0.55, 0.95, 0.45, 0.7, 0.3, 0.6, 0.85, 0.5, 0.35].map((h, i) => (
+              <span class="voice-bar" style={`--h:${h}; animation-delay:${(i % 6) * 0.12}s;`}></span>
+            ))}
+          </div>
+          <div class="space-y-2.5 text-sm">
+            <div class="flex gap-2"><span class="shrink-0 font-medium" style="color:rgba(242,245,255,0.6);">Cliente:</span><span style="color:rgba(242,245,255,0.9);">Quería saber si atienden el sábado.</span></div>
+            <div class="flex gap-2"><span class="shrink-0 font-medium" style="color:var(--primary-l);">Zential:</span><span style="color:rgba(242,245,255,0.9);">Sí, los sábados de 9 a 13. ¿Le reservo un turno?</span></div>
+          </div>
+          <div class="mt-5 pt-4 border-t border-white/10 text-xs flex items-center gap-2" style="color:rgba(242,245,255,0.75);">
+            <FileText class="w-3.5 h-3.5 shrink-0" style="color:var(--primary-l);" />
+            Resumen: turno agendado para el sábado 10:00.
+          </div>
+        </div>
+      </ServicioRow>
+    </div>
+
+    <!-- 03 · CRM -->
+    <div class="mb-24">
+      <ServicioRow
+        id="servicio-crm"
+        name="Zential CRM"
+        title="Gestión comercial centralizada y priorizada."
+        bullets={[
+          'Historial completo de cada cliente en un único sistema',
+          'Calificación automática de cada consulta entrante',
+          'Etapas y seguimiento adaptados al proceso comercial',
+        ]}
+      >
+        <Fragment slot="description">
+          Un sistema de gestión de clientes desarrollado a medida, que centraliza el historial, los pedidos y el seguimiento comercial de cada contacto. Incorpora la calificación automática de cada consulta entrante según su intención de compra, para que el equipo comercial concentre su tiempo en las oportunidades con mayor probabilidad de cierre.
         </Fragment>
         <div slot="mockup" class="liquid-glass-strong rounded-2xl overflow-hidden max-w-md mx-auto flex">
           <div class="hidden sm:flex flex-col items-center gap-5 w-14 py-5 border-r border-white/10 bg-white/5 shrink-0">
@@ -75,53 +147,166 @@ import automatizacion from '../assets/mockups/automatizacion.jpg';
           </div>
           <div class="flex-1 min-w-0">
             <div class="flex items-center justify-between px-5 py-4 border-b border-white/10">
-              <span class="text-sm font-medium" style="color:#F2F5FF;">Contactos</span>
+              <span class="text-sm font-medium" style="color:#F2F5FF;">Consultas nuevas</span>
+              <span class="text-xs" style="color:rgba(242,245,255,0.6);">Calificación</span>
             </div>
             <div class="grid grid-cols-2 gap-2.5 p-3 pb-1.5">
               <div class="rounded-xl bg-white/5 px-3 py-2.5">
-                <div class="text-xs mb-0.5" style="color:rgba(242,245,255,0.6);">Clientes activos</div>
-                <div class="font-display font-bold text-lg" style="color:#F2F5FF;">42</div>
+                <div class="text-xs mb-0.5" style="color:rgba(242,245,255,0.6);">Listos para comprar</div>
+                <div class="font-display font-bold text-lg inline-block" style="color:var(--primary-l);" data-crm-count>8</div>
               </div>
               <div class="rounded-xl bg-white/5 px-3 py-2.5">
-                <div class="text-xs mb-0.5" style="color:rgba(242,245,255,0.6);">Nuevos esta semana</div>
-                <div class="font-display font-bold text-lg" style="color:var(--primary-l);">6</div>
+                <div class="text-xs mb-0.5" style="color:rgba(242,245,255,0.6);">En seguimiento</div>
+                <div class="font-display font-bold text-lg" style="color:#F2F5FF;">15</div>
               </div>
             </div>
-            <div class="p-3 pt-1.5 space-y-1.5">
+            <!-- CRM en vivo: entra un contacto nuevo, se analiza y se califica como "Caliente" -->
+            <div class="p-3 pt-1.5">
+            <div class="relative overflow-hidden" data-live-crm>
+            <div class="space-y-1.5" data-crm-list>
+              <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white/5" data-crm-new hidden>
+                <div class="w-8 h-8 rounded-full bg-zafiro flex items-center justify-center text-xs font-medium shrink-0" style="color:#F2F5FF;">JT</div>
+                <span class="text-sm flex-1 truncate" style="color:rgba(242,245,255,0.9);">Javier Torres</span>
+                <span class="text-xs px-2.5 py-1 rounded-full bg-white/10 shrink-0 inline-flex items-center gap-1.5" style="color:rgba(242,245,255,0.7);" data-crm-analyzing><span class="lm-spinner"></span>Analizando…</span>
+                <span class="text-xs px-2.5 py-1 rounded-full shrink-0 font-medium" style="background:rgba(174,192,250,0.3); color:#F2F5FF;" data-crm-hot hidden>Caliente</span>
+              </div>
               <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white/5">
                 <div class="w-8 h-8 rounded-full bg-zafiro flex items-center justify-center text-xs font-medium shrink-0" style="color:#F2F5FF;">MC</div>
                 <span class="text-sm flex-1 truncate" style="color:rgba(242,245,255,0.9);">María Cabrera</span>
-                <span class="text-xs px-2.5 py-1 rounded-full shrink-0" style="background:rgba(174,192,250,0.15); color:var(--primary-l);">Nuevo</span>
+                <span class="text-xs px-2.5 py-1 rounded-full shrink-0 font-medium" style="background:rgba(174,192,250,0.3); color:#F2F5FF;">Caliente</span>
               </div>
               <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white/5">
                 <div class="w-8 h-8 rounded-full bg-mist/30 flex items-center justify-center text-xs font-medium shrink-0" style="color:#F2F5FF;">RD</div>
                 <span class="text-sm flex-1 truncate" style="color:rgba(242,245,255,0.9);">Roberto Díaz</span>
-                <span class="text-xs px-2.5 py-1 rounded-full bg-white/10 shrink-0" style="color:rgba(242,245,255,0.75);">En seguimiento</span>
+                <span class="text-xs px-2.5 py-1 rounded-full shrink-0" style="background:rgba(174,192,250,0.15); color:var(--primary-l);">Tibio</span>
               </div>
               <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white/5">
                 <div class="w-8 h-8 rounded-full bg-zafiro/60 flex items-center justify-center text-xs font-medium shrink-0" style="color:#F2F5FF;">LP</div>
                 <span class="text-sm flex-1 truncate" style="color:rgba(242,245,255,0.9);">Lucía Paz</span>
-                <span class="text-xs px-2.5 py-1 rounded-full shrink-0" style="background:rgba(174,192,250,0.25); color:var(--primary-l);">Cliente</span>
+                <span class="text-xs px-2.5 py-1 rounded-full bg-white/10 shrink-0" style="color:rgba(242,245,255,0.6);">Frío</span>
               </div>
+            </div>
+            </div>
             </div>
           </div>
         </div>
       </ServicioRow>
     </div>
 
+    <!-- 04 · Cerebro -->
     <div class="mb-24">
       <ServicioRow
-        title="Una web que muestra tu negocio como corresponde."
+        id="servicio-cerebro"
+        reverse
+        name="Zential Cerebro"
+        title="El conocimiento de la empresa, disponible al instante."
         bullets={[
-          'Diseño propio, no una plantilla genérica',
-          'Contenido y estructura pensados para tu negocio',
-          'Integrable con tu agente de atención y tu catálogo',
+          'Respuestas inmediatas, basadas solo en información interna',
+          'Incorporación más rápida de nuevos integrantes',
+          'Integrable con el agente de atención al cliente',
         ]}
-        ctaText="Consultar por una web a medida"
-        ctaHref="mailto:zential.ai@gmail.com?subject=Quiero%20info%20de%20una%20web%20a%20medida"
       >
         <Fragment slot="description">
-          Webs institucionales o de venta, con la estructura y el contenido que tu negocio necesita mostrar, sin plantillas genéricas armadas para cualquier rubro.
+          Una base de conocimiento inteligente que reúne manuales, procedimientos, precios, políticas y respuestas frecuentes en un único lugar. El equipo realiza consultas en lenguaje natural y obtiene respuestas inmediatas, basadas exclusivamente en la información de la empresa y con referencia a las fuentes utilizadas.
+        </Fragment>
+        <div slot="mockup" class="liquid-glass-strong rounded-3xl p-6 md:p-8 max-w-md mx-auto">
+          <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+            <div class="w-9 h-9 rounded-full bg-zafiro flex items-center justify-center">
+              <Brain class="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <div class="text-sm font-medium" style="color:#F2F5FF;">Zential Cerebro</div>
+              <div class="text-xs" style="color:rgba(242,245,255,0.6);">Base de conocimiento de tu empresa</div>
+            </div>
+          </div>
+          <!-- Cerebro en vivo: la pregunta se escribe, "Buscando…" y aparecen la respuesta y las fuentes -->
+          <div data-live-brain>
+          <div class="relative rounded-2xl bg-white/5 border border-white/10 px-4 py-3 text-sm mb-4" style="color:#F2F5FF;">
+            <span class="invisible" aria-hidden="true">¿Cuál es la política de devoluciones para compras online?</span>
+            <span class="absolute inset-0 px-4 py-3" data-brain-typed>¿Cuál es la política de devoluciones para compras online?</span>
+          </div>
+          <div class="relative mb-4">
+            <div class="lm-typing absolute left-0 top-0 text-xs inline-flex items-center gap-2" style="color:var(--primary-l);" aria-hidden="true" data-brain-search>
+              <span class="lm-spinner"></span>Buscando en la base de conocimiento…
+            </div>
+            <div class="lm-item text-sm leading-relaxed" style="color:rgba(242,245,255,0.9);" data-brain-answer>
+              Se aceptan devoluciones dentro de los 30 días de recibido el pedido, con el producto sin uso y en su embalaje original. El cliente inicia el trámite desde su cuenta y el reintegro se acredita en hasta 10 días hábiles.
+            </div>
+          </div>
+          <div class="lm-item" data-brain-sources>
+          <div class="text-xs mb-2" style="color:rgba(242,245,255,0.6);">Fuentes</div>
+          <div class="flex flex-wrap gap-2">
+            <span class="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-white/5" style="color:var(--primary-l);"><FileText class="w-3 h-3" />Políticas comerciales 2026.pdf</span>
+            <span class="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-white/5" style="color:var(--primary-l);"><FileText class="w-3 h-3" />Manual de atención</span>
+          </div>
+          </div>
+          </div>
+        </div>
+      </ServicioRow>
+    </div>
+
+    <!-- 05 · Automatizaciones -->
+    <div class="mb-24">
+      <ServicioRow
+        id="servicio-automatizacion"
+        name="Zential Automatizaciones"
+        title="Procesos repetitivos, ejecutados automáticamente."
+        bullets={[
+          'Eliminación de cargas duplicadas y errores manuales',
+          'Recordatorios y seguimientos en tiempo y forma',
+          'Reportes generados automáticamente',
+        ]}
+      >
+        <Fragment slot="description">
+          Integramos el CRM, las planillas, el correo y las herramientas que la empresa ya utiliza para que las tareas repetitivas se ejecuten sin intervención manual: carga de pedidos, recordatorios, seguimientos, reportes y alertas al equipo.
+        </Fragment>
+        <div slot="mockup" class="liquid-glass-strong rounded-3xl p-6 md:p-8 max-w-md mx-auto">
+          <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+            <div class="w-9 h-9 rounded-full bg-zafiro flex items-center justify-center">
+              <Zap class="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <div class="text-sm font-medium" style="color:#F2F5FF;">Zential Automatizaciones</div>
+              <div class="text-xs" style="color:rgba(242,245,255,0.6);">Flujo: nuevo pedido</div>
+            </div>
+          </div>
+          <ol class="relative mb-5">
+            <span class="absolute left-4 top-4 bottom-4 w-px bg-white/10" aria-hidden="true"></span>
+            {flujo.map((step, i) => (
+              <li class="flow-step relative flex items-center gap-3 py-2" style={`--i:${i};`}>
+                <span class="relative z-10 w-8 h-8 shrink-0 rounded-full bg-white/5 border border-white/10 flex items-center justify-center" style="background-color:#0d1240;">
+                  <step.icon class="w-3.5 h-3.5" style="color:var(--primary-l);" />
+                </span>
+                <span class="flex-1 text-sm" style="color:rgba(242,245,255,0.9);">{step.text}</span>
+                <span class="flow-check w-5 h-5 shrink-0 rounded-full bg-zafiro flex items-center justify-center">
+                  <Check class="w-3 h-3 text-white" />
+                </span>
+              </li>
+            ))}
+          </ol>
+          <div class="flex items-center gap-2 rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-xs" style="color:rgba(242,245,255,0.85);">
+            <CircleCheck class="w-4 h-4 shrink-0" style="color:var(--primary-l);" />
+            Completado automáticamente, sin intervención manual
+          </div>
+        </div>
+      </ServicioRow>
+    </div>
+
+    <!-- 06 · Web -->
+    <div>
+      <ServicioRow
+        id="servicio-web"
+        reverse
+        name="Zential Web"
+        title="Presencia digital diseñada para convertir."
+        bullets={[
+          'Diseño a medida, sin plantillas genéricas',
+          'Optimizado para celulares y buscadores',
+          'Integrado con WhatsApp, el agente de atención y el CRM',
+        ]}
+      >
+        <Fragment slot="description">
+          Sitios web institucionales y comerciales con diseño a medida, alto rendimiento y optimización para buscadores, integrados con WhatsApp, el agente de atención y el CRM para que cada visita pueda convertirse en una oportunidad comercial.
         </Fragment>
         <div slot="mockup" class="liquid-glass-strong rounded-2xl overflow-hidden max-w-md mx-auto">
           <div class="flex items-center gap-1.5 px-4 py-3 border-b border-white/10 bg-white/5">
@@ -139,29 +324,73 @@ import automatizacion from '../assets/mockups/automatizacion.jpg';
             </div>
             <h4 class="font-display font-semibold mb-2" style="font-size:1.15rem; color:#F2F5FF;">Bienvenido a tu negocio</h4>
             <p class="text-sm mb-5" style="color:rgba(242,245,255,0.7);">Contale a tus clientes quién sos y qué ofrecés, desde una web hecha a tu medida.</p>
-            <div class="inline-flex h-9 items-center px-5 rounded-full bg-zafiro text-xs font-medium" style="color:#F2F5FF;">Conocer más</div>
+            <a href={webHref} target="_blank" rel="noopener" class="inline-flex h-9 items-center px-5 rounded-full bg-zafiro hover:bg-marino transition-colors text-xs font-medium" style="color:#F2F5FF;">Conocer más</a>
           </div>
         </div>
       </ServicioRow>
     </div>
-
-    <ServicioRow
-      reverse
-      title="Tus procesos, funcionando de manera automática."
-      bullets={[
-        'Menos carga manual, menos errores',
-        'Tus herramientas actuales, mejor conectadas',
-        'Se adapta a los procesos que ya tenés, no al revés',
-      ]}
-      ctaText="Consultar por una automatización"
-      ctaHref="mailto:zential.ai@gmail.com?subject=Quiero%20info%20de%20una%20automatizaci%C3%B3n"
-    >
-      <Fragment slot="description">
-        Conectamos las herramientas que ya usás para eliminar tareas manuales, dobles cargas y planillas sueltas: los procesos se ejecutan solos cuando algo cambia.
-      </Fragment>
-      <div slot="mockup" class="rounded-2xl overflow-hidden mx-auto" style="max-width:512px; aspect-ratio:1408/685;">
-        <Image src={automatizacion} alt="Automatización conectando herramientas y procesos" class="w-full h-full object-cover" style="filter:hue-rotate(40deg) saturate(0.8) brightness(0.95) contrast(1.05);" widths={[384, 512, 768]} sizes="(min-width: 1024px) 512px, 90vw" />
-      </div>
-    </ServicioRow>
   </div>
 </section>
+
+<script src="../scripts/live-mockups.ts"></script>
+
+<style>
+  .voice-bar {
+    width: 4px;
+    height: 100%;
+    border-radius: 9999px;
+    background: var(--primary-l);
+    opacity: 0.85;
+    transform: scaleY(var(--h));
+    animation: voice-wave 1.1s ease-in-out infinite alternate;
+  }
+  @keyframes voice-wave {
+    from { transform: scaleY(calc(var(--h) * 0.35)); }
+    to { transform: scaleY(var(--h)); }
+  }
+  /* Mockups en vivo (scripts/live-mockups.ts). Sin JS o con "reducir movimiento" se ven completos y quietos. */
+  .lm-item { transition: opacity 0.35s ease, transform 0.35s ease; }
+  .lm-off { opacity: 0; transform: translateY(6px); }
+  .lm-typing { opacity: 0; transition: opacity 0.25s ease; pointer-events: none; }
+  .lm-typing.lm-on { opacity: 1; }
+  .lm-dot {
+    width: 6px; height: 6px; border-radius: 9999px; background: #F2F5FF; opacity: 0.4;
+    animation: lm-dot 1s ease-in-out infinite;
+  }
+  .lm-dot:nth-child(2) { animation-delay: 0.15s; }
+  .lm-dot:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes lm-dot { 0%, 60%, 100% { opacity: 0.35; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+  .lm-spinner {
+    width: 10px; height: 10px; border-radius: 9999px;
+    border: 1.5px solid rgba(174, 192, 250, 0.3); border-top-color: var(--primary-l);
+    animation: lm-spin 0.8s linear infinite;
+  }
+  @keyframes lm-spin { to { transform: rotate(360deg); } }
+  [data-crm-list] { transition: transform 0.6s ease, opacity 0.4s ease; }
+  .lm-flash { animation: lm-flash 1.4s ease-out; }
+  @keyframes lm-flash { 0% { box-shadow: 0 0 0 1px var(--primary-l), 0 0 24px rgba(174, 192, 250, 0.45); } 100% { box-shadow: 0 0 0 1px transparent, 0 0 0 transparent; } }
+  .lm-pop { animation: lm-pop 0.5s ease-out; }
+  @keyframes lm-pop { 40% { transform: scale(1.35); } }
+  [data-brain-typed].lm-caret::after { content: '|'; margin-left: 1px; opacity: 0.7; animation: lm-blink 0.9s steps(1) infinite; }
+  @keyframes lm-blink { 50% { opacity: 0; } }
+
+  /* Automatizaciones: los tildes se marcan uno tras otro (ciclo de 6 s, 0,6 s de desfase por paso) */
+  .flow-check {
+    opacity: 0;
+    transform: scale(0.5);
+    animation: flow-check 6s ease-out infinite;
+    animation-delay: calc(var(--i) * 0.6s);
+  }
+  @keyframes flow-check {
+    0% { opacity: 0; transform: scale(0.5); }
+    8%, 80% { opacity: 1; transform: scale(1); }
+    90%, 100% { opacity: 0; transform: scale(0.5); }
+  }
+  :global(.tab-hidden) .voice-bar,
+  :global(.tab-hidden) .flow-check { animation-play-state: paused; }
+  @media (prefers-reduced-motion: reduce) {
+    .voice-bar { animation: none; }
+    .flow-check { animation: none; opacity: 1; transform: none; }
+    .lm-dot, .lm-spinner { animation: none; }
+  }
+</style>

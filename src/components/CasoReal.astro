@@ -1,0 +1,72 @@
+---
+// Caso real: KICKSSAR. El agente de WhatsApp todavía no está funcionando: sumarlo (y "Zential Atención IA")
+// recién cuando esté activo. La frase del cliente va en `testimonio` cuando la envíe.
+const antes = [
+  'Los productos se publicaban subiendo fotos a estados y grupos de WhatsApp.',
+  'La carga de productos, los cobros y los envíos se gestionaban a mano, uno por uno.',
+];
+const ahora = [
+  'Tienda online propia, con el catálogo completo disponible las 24 horas.',
+  'Los productos se importan a la tienda automáticamente, y los cobros y los envíos se procesan solos.',
+];
+const servicios = ['Zential Web', 'Zential Automatizaciones'];
+const testimonio: { texto: string; autor: string } | null = null;
+---
+
+<section id="caso-real" class="relative overflow-hidden py-24 px-4">
+  <div class="max-w-5xl mx-auto">
+    <div class="reveal text-center max-w-3xl mx-auto mb-12">
+      <div class="inline-flex items-center gap-2 text-xs tracking-widest uppercase mb-4" style="color:var(--primary-l);">
+        <span class="w-1.5 h-1.5 rounded-full bg-mist"></span>
+        Caso real
+      </div>
+      <h2 class="font-display font-bold mb-4" style="font-size:clamp(2rem, 5vw, 3.5rem); color:#F2F5FF; text-wrap:balance;">
+        KICKSSAR: de vender por estados de WhatsApp a una operación automatizada.
+      </h2>
+      <p style="color:rgba(242,245,255,0.85); font-size:16px;">
+        Tienda de zapatillas e indumentaria importada desde Estados Unidos, con envíos a todo el país.
+      </p>
+    </div>
+
+    <div class="reveal liquid-glass-strong rounded-3xl p-6 md:p-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+        <div>
+          <div class="text-xs tracking-widest uppercase mb-4" style="color:rgba(242,245,255,0.5);">Antes</div>
+          <ul class="space-y-4">
+            {antes.map((item) => (
+              <li class="flex gap-3 text-sm" style="color:rgba(242,245,255,0.6);">
+                <span class="mt-2 w-1.5 h-1.5 rounded-full shrink-0 bg-white/30"></span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="md:border-l md:border-white/10 md:pl-10 pt-8 md:pt-0 border-t border-white/10 md:border-t-0">
+          <div class="text-xs tracking-widest uppercase mb-4" style="color:var(--primary-l);">Ahora</div>
+          <ul class="space-y-4">
+            {ahora.map((item) => (
+              <li class="flex gap-3 text-sm" style="color:rgba(242,245,255,0.9);">
+                <span class="mt-2 w-1.5 h-1.5 rounded-full shrink-0 bg-mist"></span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {testimonio && (
+        <blockquote class="mt-8 pt-8 border-t border-white/10">
+          <p class="font-display text-lg mb-2" style="color:#F2F5FF;">“{testimonio.texto}”</p>
+          <footer class="text-sm" style="color:rgba(242,245,255,0.6);">{testimonio.autor}</footer>
+        </blockquote>
+      )}
+
+      <div class="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center gap-2">
+        <span class="text-xs mr-1" style="color:rgba(242,245,255,0.6);">Servicios implementados:</span>
+        {servicios.map((s) => (
+          <span class="text-xs px-3 py-1 rounded-full bg-white/5 border border-white/10" style="color:var(--primary-l);">{s}</span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

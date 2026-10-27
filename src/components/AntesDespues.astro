@@ -1,0 +1,75 @@
+---
+import { ArrowRight, ArrowDown } from '@lucide/astro';
+
+const rows = [
+  {
+    name: 'Zential Atención IA',
+    hoy: 'Las consultas por WhatsApp e Instagram esperan respuesta hasta que alguien del equipo está disponible.',
+    con: 'Un agente construido a medida de tu negocio responde al instante, las 24 horas, siempre con un trato humano y cercano.',
+  },
+  {
+    name: 'Zential Voz',
+    hoy: 'Las llamadas fuera de horario, o en momentos de mucha demanda, quedan sin atender.',
+    con: 'Un asistente de voz atiende cada llamada, responde las consultas, toma los datos y agenda turnos, y deriva a tu equipo cuando hace falta.',
+  },
+  {
+    name: 'Zential CRM',
+    hoy: 'Los clientes están repartidos entre chats, planillas y la memoria del equipo, y no se sabe a quién priorizar.',
+    con: 'Todos tus clientes en un solo lugar, con su historial completo y cada consulta calificada automáticamente, para que tu equipo dedique su tiempo a quienes están listos para comprar.',
+  },
+  {
+    name: 'Zential Cerebro',
+    hoy: 'La información del negocio está dispersa en carpetas, correos y personas, y encontrarla lleva tiempo.',
+    con: 'Toda la información de tu negocio reunida en un solo lugar: tu equipo pregunta y obtiene la respuesta al instante.',
+  },
+  {
+    name: 'Zential Automatizaciones',
+    hoy: 'El equipo dedica horas a tareas repetitivas y manuales, como cargar datos, enviar recordatorios o armar reportes.',
+    con: 'Esas tareas se ejecutan solas, y tu equipo usa su tiempo en lo que realmente suma.',
+  },
+  {
+    name: 'Zential Web',
+    hoy: 'La web, si existe, solo muestra información y no genera consultas.',
+    con: 'Una web diseñada a medida y conectada a tu WhatsApp, tu agente y tu CRM, para que cada visita pueda convertirse en un cliente.',
+  },
+];
+---
+
+<section id="antes-despues" class="relative overflow-hidden py-24 px-4">
+  <div class="max-w-5xl mx-auto">
+    <div class="reveal text-center max-w-2xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 text-xs tracking-widest uppercase mb-4" style="color:var(--primary-l);">
+        <span class="w-1.5 h-1.5 rounded-full bg-mist"></span>
+        Antes y después
+      </div>
+      <h2 class="font-display font-bold" style="font-size:clamp(2rem, 5vw, 3.5rem); color:#F2F5FF; text-wrap:balance;">
+        Lo que cambia en tu negocio.
+      </h2>
+    </div>
+
+    <div class="hidden md:grid grid-cols-[1fr_auto_1fr] gap-4 mb-4 px-2 text-xs tracking-widest uppercase" aria-hidden="true">
+      <div style="color:rgba(242,245,255,0.5);">Sin nuestros servicios</div>
+      <div class="w-5"></div>
+      <div style="color:var(--primary-l);">Con Zential</div>
+    </div>
+
+    <div class="space-y-6 md:space-y-4">
+      {rows.map((row) => (
+        <div class="reveal grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-stretch gap-2 md:gap-4">
+          <div class="rounded-2xl p-5 border border-white/5" style="background:rgba(255,255,255,0.02);">
+            <div class="md:hidden text-[11px] tracking-widest uppercase mb-2" style="color:rgba(242,245,255,0.5);">Sin nuestros servicios</div>
+            <p class="text-sm" style="color:rgba(242,245,255,0.6);">{row.hoy}</p>
+          </div>
+          <div class="flex items-center justify-center" aria-hidden="true">
+            <ArrowRight class="hidden md:block w-5 h-5" style="color:var(--primary-l);" />
+            <ArrowDown class="md:hidden w-5 h-5" style="color:var(--primary-l);" />
+          </div>
+          <div class="glass-lite-strong rounded-2xl p-5">
+            <div class="text-[11px] tracking-widest uppercase mb-2" style="color:var(--primary-l);">{row.name}</div>
+            <p class="text-sm" style="color:rgba(242,245,255,0.9);">{row.con}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

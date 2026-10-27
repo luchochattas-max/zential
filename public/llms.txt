@@ -1,0 +1,29 @@
+# Zential
+
+> Zential es una agencia de Buenos Aires, Argentina, que implementa inteligencia artificial y automatización en negocios de distintos rubros y tamaños. Diseña, desarrolla y mantiene soluciones a medida. El contacto es por WhatsApp.
+
+- Sitio: https://zential-site.vercel.app/
+- WhatsApp: +54 9 11 7676-8951 (https://wa.me/5491176768951)
+- Instagram: https://instagram.com/zential.ai
+- Zona de trabajo: Argentina (con base en Buenos Aires)
+
+## Servicios
+
+- **Zential Atención IA:** agente de inteligencia artificial que atiende consultas por WhatsApp e Instagram las 24 horas, con la información real del negocio, y deriva a una persona cuando hace falta.
+- **Zential Voz:** asistente de voz con inteligencia artificial que atiende las llamadas del negocio, responde consultas frecuentes, toma datos y turnos y deriva al equipo.
+- **Zential CRM:** CRM a medida que centraliza clientes, historial y seguimiento, con calificación automática de cada consulta (caliente, tibia o fría).
+- **Zential Cerebro:** base de conocimiento interna que reúne manuales, procedimientos, precios y políticas, a la que el equipo le pregunta y que responde citando sus fuentes.
+- **Zential Automatizaciones:** integración de las herramientas del negocio (CRM, planillas, mail) para automatizar tareas repetitivas como carga de pedidos, recordatorios, seguimientos y reportes.
+- **Zential Web:** sitios web a medida, rápidos y preparados para buscadores, integrados con WhatsApp, el agente y el CRM.
+
+## Forma de trabajo
+
+1. Diagnóstico gratuito del negocio.
+2. Propuesta con alcance e inversión, y una demostración de la solución antes de cerrar el acuerdo.
+3. Desarrollo.
+4. Onboarding del equipo.
+5. Mantenimiento mensual: soporte, actualizaciones y nuevas funciones.
+
+## Para quién
+
+Negocios y organizaciones que quieren automatizar la atención al cliente, ordenar su gestión comercial y ahorrar tiempo en tareas repetitivas con inteligencia artificial, sin necesidad de tener todo digitalizado antes de empezar.

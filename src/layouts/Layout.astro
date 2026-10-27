@@ -1,16 +1,79 @@
 ---
+// Tipografías alojadas en el propio sitio (solo latin, que incluye tildes y ñ): evita la descarga
+// bloqueante desde Google Fonts antes del primer dibujo de la página.
+import '@fontsource/inter/latin-400.css';
+import '@fontsource/inter/latin-500.css';
+import '@fontsource/inter/latin-600.css';
+import '@fontsource/poppins/latin-400.css';
+import '@fontsource/poppins/latin-600.css';
+import '@fontsource/poppins/latin-700.css';
 import '../styles/global.css';
-import favicon from '../assets/logo/zential_favicon_avatar.png';
+import poppins700 from '@fontsource/poppins/files/poppins-latin-700-normal.woff2?url';
+import inter400 from '@fontsource/inter/files/inter-latin-400-normal.woff2?url';
 
 interface Props {
   title?: string;
   description?: string;
 }
 
+import { WHATSAPP_NUMBER } from '../config/whatsapp';
+
 const {
-  title = 'Zential — Inteligencia artificial para negocios',
-  description = 'Zential diagnostica tu negocio, desarrolla la solución de inteligencia artificial que necesita y la implementa de punta a punta. Un paso adelante hacia el futuro.',
+  title = 'Zential — Inteligencia artificial y automatización para negocios',
+  description = 'Zential es una agencia de Buenos Aires que implementa inteligencia artificial y automatización en negocios: agentes de atención por WhatsApp, asistente de voz, CRM con calificación de leads, base de conocimiento, automatizaciones y desarrollo web a medida.',
 } = Astro.props;
+
+const SITE_URL = 'https://zential-site.vercel.app/';
+
+const SERVICIOS: [string, string][] = [
+  ['Zential Atención IA', 'Agente de inteligencia artificial que atiende consultas por WhatsApp e Instagram las 24 horas.'],
+  ['Zential Voz', 'Asistente de voz con inteligencia artificial que atiende las llamadas del negocio.'],
+  ['Zential CRM', 'CRM a medida con calificación automática de leads.'],
+  ['Zential Cerebro', 'Base de conocimiento interna a la que el equipo consulta con inteligencia artificial.'],
+  ['Zential Automatizaciones', 'Automatización de procesos y tareas repetitivas, integrando las herramientas del negocio.'],
+  ['Zential Web', 'Desarrollo de sitios web a medida integrados con WhatsApp, agente y CRM.'],
+];
+const ogImage = new URL('/og-image.png', SITE_URL).href;
+
+// Datos estructurados: le dicen a Google que el sitio se llama "Zential" (en vez de "Vercel") y cuál es su logo.
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Zential',
+    alternateName: ['Zential IA', 'Zential AI'],
+    url: SITE_URL,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Zential',
+    url: SITE_URL,
+    logo: new URL('/icon-512.png', SITE_URL).href,
+    description,
+    telephone: `+${WHATSAPP_NUMBER}`,
+    address: { '@type': 'PostalAddress', addressLocality: 'Buenos Aires', addressCountry: 'AR' },
+    areaServed: { '@type': 'Country', name: 'Argentina' },
+    sameAs: ['https://instagram.com/zential.ai'],
+    // Temas y servicios: ayudan a buscadores y asistentes de IA a asociar "Zential" con estas búsquedas.
+    knowsAbout: [
+      'Inteligencia artificial para negocios',
+      'Automatización de negocios',
+      'Agentes de IA para WhatsApp',
+      'Chatbots con inteligencia artificial',
+      'Asistentes de voz con IA',
+      'CRM con inteligencia artificial',
+      'Calificación de leads',
+      'Bases de conocimiento con IA',
+      'Automatización de procesos',
+      'Desarrollo web',
+    ],
+    makesOffer: SERVICIOS.map(([name, desc]) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name, description: desc, provider: { '@type': 'Organization', name: 'Zential' } },
+    })),
+  },
+];
 ---
 
 <!DOCTYPE html>
@@ -20,11 +83,64 @@ const {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
-  <link rel="icon" type="image/png" href={favicon.src} />
+  <link rel="canonical" href={SITE_URL} />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Zential" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={SITE_URL} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="es_AR" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+  <!-- Favicons en rutas fijas (public/): Google pide un ícono cuadrado, múltiplo de 48px y con URL estable -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <!-- Precarga de las dos tipografías que se ven primero (título del inicio y texto) -->
+  <link rel="preload" href={poppins700} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={inter400} as="font" type="font/woff2" crossorigin />
+
+  <!-- Google Analytics 4 y Microsoft Clarity (solo en producción, para no ensuciar los datos con las pruebas locales).
+       gtag() y clarity() se definen ya (los eventos quedan en cola), pero los scripts externos se descargan recién
+       después de que la página terminó de cargar o ante la primera interacción, para no trabar el celular al abrirla. -->
+  {import.meta.env.PROD && (
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TQ8C647ES5');
+      window.clarity = window.clarity || function(){(window.clarity.q = window.clarity.q || []).push(arguments)};
+
+      (function () {
+        var loaded = false;
+        function add(src) {
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = src;
+          document.head.appendChild(s);
+        }
+        function loadAnalytics() {
+          if (loaded) return;
+          loaded = true;
+          add('https://www.googletagmanager.com/gtag/js?id=G-TQ8C647ES5');
+          add('https://www.clarity.ms/tag/yu5lfsczw0');
+        }
+        ['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(function (ev) {
+          addEventListener(ev, loadAnalytics, { once: true, passive: true });
+        });
+        addEventListener('load', function () { setTimeout(loadAnalytics, 2000); });
+      })();
+    </script>
+  )}
 </head>
 <body class="text-white font-body antialiased">
   <div class="page-video-overlay" aria-hidden="true"></div>
@@ -41,8 +157,10 @@ const {
 
   <slot />
 
+  <script src="../scripts/visibility.ts"></script>
   <script src="../scripts/cursor.ts"></script>
   <script src="../scripts/nav.ts"></script>
   <script src="../scripts/reveal.ts"></script>
+  <script src="../scripts/analytics.ts"></script>
 </body>
 </html>

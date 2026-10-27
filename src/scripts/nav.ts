@@ -24,3 +24,11 @@ if (btn && menu) {
   });
   menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenuState(false)));
 }
+
+document.querySelectorAll('.nav-accordion-toggle').forEach((toggle) => {
+  toggle.addEventListener('click', () => {
+    const accordion = toggle.closest('.nav-accordion');
+    const isOpen = accordion?.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(Boolean(isOpen)));
+  });
+});

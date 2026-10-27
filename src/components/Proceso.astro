@@ -1,12 +1,10 @@
 ---
-import { Search, FileText, Code2, Users, RefreshCw } from '@lucide/astro';
-
 const steps = [
-  { icon: Search, n: '01', title: 'Diagnóstico', text: 'Relevamos tu negocio en una primera llamada: qué hacés, dónde perdés tiempo y qué margen hay para automatizar.' },
-  { icon: FileText, n: '02', title: 'Propuesta', text: 'Te presentamos la solución específica para tu caso, con alcance y precio definidos antes de arrancar.' },
-  { icon: Code2, n: '03', title: 'Desarrollo', text: 'Construimos el agente, la automatización o el sistema acordado, a medida de tu operación.' },
-  { icon: Users, n: '04', title: 'Onboarding', text: 'Te acompañamos en las primeras semanas y capacitamos a tu equipo para que lo use sin fricción.' },
-  { icon: RefreshCw, n: '05', title: 'Mantenimiento', text: 'Suscripción mensual con soporte, actualizaciones y nuevas funciones a medida que tu negocio crece.' },
+  { id: 'proceso-diagnostico', n: '01', title: 'Diagnóstico', text: 'Relevamos tu negocio en una primera llamada: qué hacés, dónde perdés tiempo y qué margen hay para automatizar.' },
+  { id: 'proceso-propuesta', n: '02', title: 'Propuesta', text: 'Te presentamos la solución específica para tu caso, con una demostración previa y con alcance y precio definidos antes de arrancar.' },
+  { id: 'proceso-desarrollo', n: '03', title: 'Desarrollo', text: 'Construimos el agente, la automatización o el sistema acordado, a medida de tu operación.' },
+  { id: 'proceso-onboarding', n: '04', title: 'Onboarding', text: 'Te acompañamos en las primeras semanas y capacitamos a tu equipo para que lo use sin fricción.' },
+  { id: 'proceso-mantenimiento', n: '05', title: 'Mantenimiento', text: 'Suscripción mensual con soporte, actualizaciones y nuevas funciones a medida que tu negocio crece.' },
 ];
 ---
 
@@ -25,15 +23,63 @@ const steps = [
       </p>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
-      {steps.map((step) => (
-        <div class="reveal liquid-glass hover-lift rounded-2xl p-6">
-          <step.icon class="w-5 h-5 mb-6" style="color:var(--primary-l);" />
-          <div class="font-display font-bold text-3xl mb-3" style="color:var(--primary-l);">{step.n}</div>
-          <h3 class="font-display font-semibold mb-2" style="color:#F2F5FF;">{step.title}</h3>
-          <p class="text-sm" style="color:rgba(242,245,255,0.85);">{step.text}</p>
-        </div>
+    <!-- Línea de tiempo: vertical en celular, horizontal desde lg. Al entrar en pantalla (.in-view),
+         cada tramo de la línea se llena y cada círculo se ilumina, uno tras otro. -->
+    <ol class="timeline reveal grid grid-cols-1 lg:grid-cols-5">
+      {steps.map((step, i) => (
+        <li id={step.id} style={`scroll-margin-top: 110px; --i:${i};`}
+            class="relative flex lg:flex-col lg:items-center gap-5 lg:gap-0 pb-10 lg:pb-0 lg:px-3 lg:text-center">
+          {i < steps.length - 1 && (
+            <span class="tl-track absolute left-[27px] top-14 bottom-0 w-px lg:left-[calc(50%+28px)] lg:top-7 lg:bottom-auto lg:w-[calc(100%-56px)] lg:h-px" aria-hidden="true">
+              <span class="tl-fill absolute inset-0"></span>
+            </span>
+          )}
+          <span class="tl-node relative z-10 w-14 h-14 shrink-0 rounded-full flex items-center justify-center font-display font-bold text-lg lg:mb-6">
+            {step.n}
+          </span>
+          <div class="pt-3 lg:pt-0">
+            <h3 class="font-display font-semibold mb-2" style="color:#F2F5FF;">{step.title}</h3>
+            <p class="text-sm" style="color:rgba(242,245,255,0.85);">{step.text}</p>
+          </div>
+        </li>
       ))}
-    </div>
+    </ol>
   </div>
 </section>
+
+<style>
+  /* La línea de tiempo no se desplaza al aparecer: solo se anima la línea y los círculos */
+  .timeline.reveal { transform: none; }
+
+  .tl-track { background: rgba(255, 255, 255, 0.1); }
+  .tl-fill {
+    background: var(--primary-l);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.45s ease;
+    transition-delay: calc(var(--i) * 0.6s + 0.25s);
+  }
+  @media (min-width: 1024px) {
+    .tl-fill { transform: scaleX(0); transform-origin: left; }
+  }
+
+  .tl-node {
+    background: #0d1240;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(242, 245, 255, 0.5);
+    transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+    transition-delay: calc(var(--i) * 0.6s);
+  }
+
+  .timeline.in-view .tl-fill { transform: none; }
+  .timeline.in-view .tl-node {
+    background: var(--color-zafiro);
+    border-color: var(--primary-l);
+    color: #F2F5FF;
+    box-shadow: 0 0 24px rgba(174, 192, 250, 0.35);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tl-fill, .tl-node { transition: none; }
+  }
+</style>

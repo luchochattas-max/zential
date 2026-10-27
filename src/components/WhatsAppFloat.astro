@@ -1,0 +1,49 @@
+---
+import WhatsAppIcon from './WhatsAppIcon.astro';
+import { whatsappUrl, MENSAJE_CONSULTA } from '../config/whatsapp';
+---
+
+<a id="wa-float" href={whatsappUrl(MENSAJE_CONSULTA)} target="_blank" rel="noopener"
+   class="wa-float fixed z-40 flex items-center justify-center w-14 h-14 rounded-full text-white"
+   aria-label="Escribinos por WhatsApp" title="Escribinos por WhatsApp">
+  <WhatsAppIcon class="w-7 h-7" />
+</a>
+
+<style>
+  .wa-float {
+    right: 20px;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    background: #25D366;
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35), 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.2s ease, opacity 0.3s ease;
+  }
+  /* Hidden while the hero is on screen: the hero already has its own WhatsApp button,
+     and on phones the floating one would cover it. */
+  .wa-float.wa-hidden {
+    opacity: 0;
+    transform: translateY(12px) scale(0.9);
+    pointer-events: none;
+  }
+  .wa-float:hover {
+    transform: scale(1.06);
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.45), 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  .wa-float:focus-visible {
+    outline: 2px solid #F2F5FF;
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wa-float { transition: none; }
+  }
+</style>
+
+<script>
+  const floatBtn = document.getElementById('wa-float');
+  const hero = document.getElementById('top');
+  if (floatBtn && hero && 'IntersectionObserver' in window) {
+    floatBtn.classList.add('wa-hidden');
+    new IntersectionObserver(([entry]) => {
+      floatBtn.classList.toggle('wa-hidden', entry.isIntersecting);
+    }, { threshold: 0.35 }).observe(hero);
+  }
+</script>

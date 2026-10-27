@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://zential-site.vercel.app/sitemap.xml

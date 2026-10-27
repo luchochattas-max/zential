@@ -8,8 +8,26 @@ const items = [
   { q: '¿Cómo es el proceso de trabajo?', a: 'Cinco etapas: diagnóstico, propuesta, desarrollo, onboarding y mantenimiento. Podés ver el detalle de cada una más arriba, en la sección Proceso.' },
   { q: '¿Sirve para cualquier tipo de negocio?', a: 'Trabajamos con organizaciones de distintos rubros y tamaños. Lo que cambia según cada caso es el punto de partida y el orden en que se suman las soluciones.' },
   { q: '¿Qué tan rápido se ven resultados?', a: 'Varía según la solución. Un agente de atención suele estar operativo en pocas semanas; un desarrollo a medida depende del alcance definido en la propuesta.' },
+  { q: '¿Puedo ver cómo funciona antes de contratar?', a: 'Sí. Antes de cerrar el acuerdo realizamos una demostración de la solución propuesta, para que veas cómo funcionaría en tu negocio antes de tomar la decisión.' },
+  { q: '¿Funciona con las herramientas que ya uso?', a: 'Sí. Integramos las herramientas que tu negocio ya utiliza, como WhatsApp, Instagram, correo, calendarios, planillas, CRM o cualquier sistema que cuente con API. No es necesario reemplazarlas.' },
+  { q: '¿Mis clientes van a notar que responde una inteligencia artificial?', a: 'El agente responde en lenguaje natural, con el tono y la información de tu negocio. Cuando una consulta requiere la intervención de una persona, la deriva a tu equipo con todo el contexto.' },
+  { q: '¿Mi equipo necesita conocimientos técnicos?', a: 'No. Nos ocupamos del desarrollo y la configuración, y durante el onboarding capacitamos a tu equipo para que utilice cada herramienta en su trabajo diario.' },
+  { q: '¿Qué pasa con la información de mi negocio y de mis clientes?', a: 'La información sigue siendo de tu negocio y se utiliza únicamente para el funcionamiento de las soluciones implementadas. Los accesos se definen junto con vos desde el inicio del proyecto.' },
 ];
+
+// Las mismas preguntas como datos estructurados, para Google y los asistentes de IA.
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
 ---
+
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
 <section id="faq" class="relative overflow-hidden py-24 px-4">
   <div class="max-w-3xl mx-auto">
@@ -25,7 +43,7 @@ const items = [
 
     <div class="space-y-4">
       {items.map((item) => (
-        <div class="faq-item reveal liquid-glass rounded-2xl overflow-hidden">
+        <div class="faq-item reveal glass-lite rounded-2xl overflow-hidden">
           <button class="faq-toggle w-full flex items-center justify-between gap-4 text-left px-6 py-5" aria-expanded="false">
             <span class="font-display font-medium" style="color:#F2F5FF;">{item.q}</span>
             <Plus class="faq-toggle-icon w-5 h-5 shrink-0" style="color:var(--primary-l);" />
