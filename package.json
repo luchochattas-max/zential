@@ -9,7 +9,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "astro check",
+    "test": "playwright test",
+    "verify": "astro check && astro build && playwright test"
   },
   "dependencies": {
     "@astrojs/vercel": "^11.0.10",
@@ -25,6 +28,9 @@
     "esbuild": true
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@playwright/test": "^1.64.1",
+    "typescript": "^6.0.3",
     "vercel": "^59.17.0"
   }
 }

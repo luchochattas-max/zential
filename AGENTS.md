@@ -2,7 +2,8 @@
 
 Landing de **Zential** (agencia de IA para negocios), en producción en https://zential-site.vercel.app.
 
-- Antes de trabajar, leer la sección **"ESTADO ACTUAL"** de `../historial-de-cambios.md`: servicios vigentes, preferencias del usuario y pendientes.
+- Antes de trabajar, leer `.factory/brain.md` (memoria del proyecto: decisiones, reglas, cómo se verifica). Las tareas de la AI Factory se manejan con `/factory` y su estado vive en `.factory/`.
+- Antes de trabajar, leer también la sección **"ESTADO ACTUAL"** de `../historial-de-cambios.md`: servicios vigentes, preferencias del usuario y pendientes.
 - Después de cada cambio que se publique, agregar una entrada con fecha en `../historial-de-cambios.md` y actualizar "ESTADO ACTUAL" y "Pendientes" si cambian.
 - El usuario (Lucas) no es programador: explicarle en español rioplatense, en palabras simples, y con pasos concretos.
 
