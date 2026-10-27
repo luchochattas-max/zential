@@ -10,3 +10,5 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 
 items.forEach((el) => io.observe(el));
+// Esto es un módulo para TS (igual que analytics.ts): evita que sus variables choquen con las de otros scripts.
+export {};
